@@ -1,9 +1,12 @@
 package org.example.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class User {
@@ -14,6 +17,16 @@ public class User {
     private String account;
     private String name;
     private String password;
+    private Date createTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public Integer getId() {
         return id;

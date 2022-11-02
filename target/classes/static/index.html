@@ -12,13 +12,18 @@
 
     <script>
         console.log("aaa")
+        const user = {
+            account: "test",
+            name: "测试",
+            password: "2222"
+        }
 
         fetch("http://127.0.0.1:8080/users", {
             method: "post",
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
+                "Content-Type": "application/json"
             },
-            body: "account=test&name=测试&password=111111"
+            body: JSON.stringify(user)
         }).then((res) => {
             console.log(res.json())
         })

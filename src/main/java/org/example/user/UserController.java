@@ -3,8 +3,11 @@ package org.example.user;
 import org.example.Resp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
 
 @RestController
 public class UserController {
@@ -13,16 +16,22 @@ public class UserController {
     private UserRepo userRepo;
 
     @PostMapping("/users")
-    public Resp addUser(@RequestParam String account, @RequestParam String name, @RequestParam String password) {
+    public Resp addUser(@RequestBody User user) {
         Resp res = new Resp();
         res.setCode(200);
         res.setMsg("success");
 
-        User user = new User();
-        user.setAccount(account);
-        user.setName(name);
-        user.setPassword(password);
-        userRepo.save(user);
+        Date now = new Date();
+        user.setCreateTime(now);
+
+        try {
+            userRepo.save(user);
+        } catch (Exception e) {
+            String msg = e.getMessage();
+            res.setCode(500);
+            res.setMsg(msg);
+        }
+
 
         res.setData(user);
 
